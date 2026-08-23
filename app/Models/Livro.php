@@ -11,6 +11,8 @@ class Livro extends Model
 {
     use HasFactory, SoftDeletes;
 
+        protected $table = 'livros'; 
+
     protected $fillable = [
         'titulo',
         'genero',

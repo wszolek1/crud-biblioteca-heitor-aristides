@@ -12,7 +12,7 @@ return new class extends Migration
             $table->id();
             $table->string('titulo');
             $table->string('genero');
-            $table->year('ano_publicacao');
+            $table->integer('ano_publicacao');
             $table->integer('quantidade_estoque')->default(0);
             $table->foreignId('autor_id')->constrained('autores')->onDelete('cascade');
             $table->timestamps();

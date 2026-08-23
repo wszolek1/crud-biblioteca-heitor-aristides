@@ -10,6 +10,8 @@ class Autor extends Model
 {
     use HasFactory;
 
+    protected $table = 'autores'; // <-- impede de dar erro
+
     protected $fillable = [
         'nome',
         'nacionalidade',
@@ -17,7 +19,6 @@ class Autor extends Model
         'biografia',
     ];
 
-    // Relacionamento: um Autor tem vários Livros
     public function livros(): HasMany
     {
         return $this->hasMany(Livro::class);
