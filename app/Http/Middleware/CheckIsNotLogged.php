@@ -8,7 +8,6 @@ use Symfony\Component\HttpFoundation\Response;
 
 class CheckIsNotLogged
 {
-    // Bloqueia quem JÁ está logado de acessar a tela de login novamente
     public function handle(Request $request, Closure $next): Response
     {
         if (session()->has('usuario_id')) {

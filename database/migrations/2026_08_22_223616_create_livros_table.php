@@ -11,12 +11,13 @@ return new class extends Migration
         Schema::create('livros', function (Blueprint $table) {
             $table->id();
             $table->string('titulo');
-            $table->string('genero');
             $table->integer('ano_publicacao');
             $table->integer('quantidade_estoque')->default(0);
             $table->foreignId('autor_id')->constrained('autores')->onDelete('cascade');
+            $table->foreignId('genero_id')->constrained('generos')->onDelete('cascade');
+            $table->foreignId('editora_id')->constrained('editoras')->onDelete('cascade');
             $table->timestamps();
-            $table->softDeletes(); // Soft Delete exigido no item 6 da Parte 3
+            $table->softDeletes();
         });
     }
 

@@ -10,7 +10,7 @@ class Autor extends Model
 {
     use HasFactory;
 
-    protected $table = 'autores'; // <-- impede de dar erro
+    protected $table = 'autores';
 
     protected $fillable = [
         'nome',

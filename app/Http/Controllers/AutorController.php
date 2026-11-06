@@ -84,7 +84,7 @@ class AutorController extends Controller
         }
 
         $autor = Autor::findOrFail($id);
-        $autor->delete(); // autor não tem soft delete, é exclusão real
+        $autor->delete();
 
         return redirect()->route('autores.index')->with('sucesso', 'Autor excluído com sucesso!');
     }

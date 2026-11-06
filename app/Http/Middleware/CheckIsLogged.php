@@ -8,7 +8,6 @@ use Symfony\Component\HttpFoundation\Response;
 
 class CheckIsLogged
 {
-    // Bloqueia o acesso de quem NÃO está logado
     public function handle(Request $request, Closure $next): Response
     {
         if (!session()->has('usuario_id')) {
