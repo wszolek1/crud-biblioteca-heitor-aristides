@@ -3,7 +3,7 @@
 @section('conteudo')
     <h2>Livros</h2>
     <a href="{{ route('livros.create') }}" class="btn btn-success mb-3">+ Novo Livro</a>
-
+    <a href="{{ route('livros.pdf') }}" target="_blank" class="btn btn-outline-danger mb-3">Gerar PDF</a>
     <table class="table table-striped table-bordered">
         <thead class="table-dark">
             <tr>
