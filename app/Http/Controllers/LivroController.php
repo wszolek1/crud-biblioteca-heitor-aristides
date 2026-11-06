@@ -8,6 +8,7 @@ use App\Models\Genero;
 use App\Models\Editora;
 use App\Services\Operations;
 use Illuminate\Http\Request;
+use Barryvdh\DomPDF\Facade\Pdf;
 
 class LivroController extends Controller
 {
@@ -15,6 +16,18 @@ class LivroController extends Controller
     {
         $livros = Livro::with(['autor', 'genero', 'editora'])->orderBy('titulo')->get();
         return view('livros.index', compact('livros'));
+    }
+
+        public function pdf()
+    {
+        $livros = Livro::with(['autor', 'genero', 'editora'])
+            ->orderBy('titulo')
+            ->get();
+
+        $pdf = Pdf::loadView('livros.pdf', compact('livros'))
+            ->setPaper('a4', 'landscape');
+
+        return $pdf->stream('livros.pdf');
     }
 
     public function create()

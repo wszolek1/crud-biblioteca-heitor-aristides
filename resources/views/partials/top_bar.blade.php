@@ -6,7 +6,8 @@
             <a class="btn btn-outline-light btn-sm" href="{{ route('autores.index') }}">Autores</a>
             <a class="btn btn-outline-light btn-sm" href="{{ route('generos.index') }}">Gêneros</a>
             <a class="btn btn-outline-light btn-sm" href="{{ route('editoras.index') }}">Editoras</a>
-            <span class="text-white ms-3">Olá, {{ session('usuario_nome') }}</span>
+            <a class="btn btn-outline-info btn-sm" href="{{ route('register') }}">Novo usuário</a>
+            <span class="text-white ms-3">Olá, {{ session('usuario_id') ? session('usuario_nome') : '' }}</span>
             <form action="{{ route('logout') }}" method="POST" class="d-inline">
                 @csrf
                 <button type="submit" class="btn btn-outline-danger btn-sm">Sair</button>
