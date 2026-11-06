@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\Livro;
 use App\Models\Autor;
+use App\Models\Genero;
+use App\Models\Editora;
 use App\Services\Operations;
 use Illuminate\Http\Request;
 
@@ -11,33 +13,38 @@ class LivroController extends Controller
 {
     public function index()
     {
-        // carrega os livros já trazendo o autor relacionado (evita consultas repetidas)
-        $livros = Livro::with('autor')->orderBy('titulo')->get();
+        $livros = Livro::with(['autor', 'genero', 'editora'])->orderBy('titulo')->get();
         return view('livros.index', compact('livros'));
     }
 
     public function create()
     {
         $autores = Autor::orderBy('nome')->get();
-        return view('livros.create', compact('autores'));
+        $generos = Genero::orderBy('nome')->get();
+        $editoras = Editora::orderBy('nome')->get();
+        return view('livros.create', compact('autores', 'generos', 'editoras'));
     }
 
     public function store(Request $request)
     {
         $request->validate([
             'titulo' => 'required|string|max:255',
-            'genero' => 'required|string|max:100',
             'ano_publicacao' => 'required|integer|min:1000|max:' . date('Y'),
             'quantidade_estoque' => 'required|integer|min:0',
             'autor_id' => 'required|exists:autores,id',
+            'genero_id' => 'required|exists:generos,id',
+            'editora_id' => 'required|exists:editoras,id',
         ], [
             'titulo.required' => 'O título do livro é obrigatório.',
-            'genero.required' => 'O gênero é obrigatório.',
             'ano_publicacao.required' => 'O ano de publicação é obrigatório.',
             'ano_publicacao.integer' => 'Informe um ano válido.',
             'quantidade_estoque.required' => 'Informe a quantidade em estoque.',
             'autor_id.required' => 'Selecione um autor.',
+            'genero_id.required' => 'Selecione um gênero.',
+            'editora_id.required' => 'Selecione uma editora.',
             'autor_id.exists' => 'O autor selecionado não existe.',
+            'genero_id.exists' => 'O gênero selecionado não existe.',
+            'editora_id.exists' => 'A editora selecionada não existe.',
         ]);
 
         Livro::create($request->all());
@@ -55,8 +62,10 @@ class LivroController extends Controller
 
         $livro = Livro::findOrFail($id);
         $autores = Autor::orderBy('nome')->get();
+        $generos = Genero::orderBy('nome')->get();
+        $editoras = Editora::orderBy('nome')->get();
 
-        return view('livros.edit', compact('livro', 'autores'));
+        return view('livros.edit', compact('livro', 'autores', 'generos', 'editoras'));
     }
 
     public function update(Request $request, $idCriptografado)
@@ -69,16 +78,18 @@ class LivroController extends Controller
 
         $request->validate([
             'titulo' => 'required|string|max:255',
-            'genero' => 'required|string|max:100',
             'ano_publicacao' => 'required|integer|min:1000|max:' . date('Y'),
             'quantidade_estoque' => 'required|integer|min:0',
             'autor_id' => 'required|exists:autores,id',
+            'genero_id' => 'required|exists:generos,id',
+            'editora_id' => 'required|exists:editoras,id',
         ], [
             'titulo.required' => 'O título do livro é obrigatório.',
-            'genero.required' => 'O gênero é obrigatório.',
             'ano_publicacao.required' => 'O ano de publicação é obrigatório.',
             'quantidade_estoque.required' => 'Informe a quantidade em estoque.',
             'autor_id.required' => 'Selecione um autor.',
+            'genero_id.required' => 'Selecione um gênero.',
+            'editora_id.required' => 'Selecione uma editora.',
         ]);
 
         $livro = Livro::findOrFail($id);
@@ -96,7 +107,7 @@ class LivroController extends Controller
         }
 
         $livro = Livro::findOrFail($id);
-        $livro->delete(); // Soft Delete: só marca deleted_at, não apaga do banco
+        $livro->delete();
 
         return redirect()->route('livros.index')->with('sucesso', 'Livro excluído com sucesso!');
     }

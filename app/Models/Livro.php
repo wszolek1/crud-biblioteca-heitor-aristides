@@ -11,19 +11,29 @@ class Livro extends Model
 {
     use HasFactory, SoftDeletes;
 
-        protected $table = 'livros'; 
+    protected $table = 'livros';
 
     protected $fillable = [
         'titulo',
-        'genero',
         'ano_publicacao',
         'quantidade_estoque',
         'autor_id',
+        'genero_id',
+        'editora_id',
     ];
 
-    // Relacionamento: um Livro pertence a um Autor
     public function autor(): BelongsTo
     {
         return $this->belongsTo(Autor::class);
+    }
+
+    public function genero(): BelongsTo
+    {
+        return $this->belongsTo(Genero::class);
+    }
+
+    public function editora(): BelongsTo
+    {
+        return $this->belongsTo(Editora::class);
     }
 }

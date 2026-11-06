@@ -12,6 +12,7 @@
                 <th>Ano</th>
                 <th>Estoque</th>
                 <th>Autor</th>
+                <th>Editora</th>
                 <th>Ações</th>
             </tr>
         </thead>
@@ -19,7 +20,7 @@
             @forelse ($livros as $livro)
                 <tr>
                     <td>{{ $livro->titulo }}</td>
-                    <td>{{ $livro->genero }}</td>
+                    <td>{{ $livro->genero->nome ?? '' }}</td>
                     <td>{{ $livro->ano_publicacao }}</td>
                     <td>{{ $livro->quantidade_estoque }}</td>
                     <td>
@@ -29,6 +30,7 @@
                             <em>sem autor</em>
                         @endif
                     </td>
+                    <td>{{ $livro->editora->nome ?? '' }}</td>
                     <td>
                         <a class="btn btn-primary btn-sm" href="{{ route('livros.edit', \App\Services\Operations::encryptId($livro->id)) }}">Editar</a>
                         <form action="{{ route('livros.destroy', \App\Services\Operations::encryptId($livro->id)) }}" method="POST" class="d-inline">
@@ -39,7 +41,7 @@
                     </td>
                 </tr>
             @empty
-                <tr><td colspan="6" class="text-center">Nenhum livro cadastrado.</td></tr>
+                <tr><td colspan="7" class="text-center">Nenhum livro cadastrado.</td></tr>
             @endforelse
         </tbody>
     </table>

@@ -14,12 +14,6 @@
         </div>
 
         <div class="mb-3">
-            <label class="form-label">Gênero</label>
-            <input type="text" name="genero" class="form-control @error('genero') is-invalid @enderror" value="{{ old('genero', $livro->genero) }}">
-            @error('genero') <div class="invalid-feedback">{{ $message }}</div> @enderror
-        </div>
-
-        <div class="mb-3">
             <label class="form-label">Ano de Publicação</label>
             <input type="number" name="ano_publicacao" class="form-control @error('ano_publicacao') is-invalid @enderror" value="{{ old('ano_publicacao', $livro->ano_publicacao) }}">
             @error('ano_publicacao') <div class="invalid-feedback">{{ $message }}</div> @enderror
@@ -41,6 +35,30 @@
                 @endforeach
             </select>
             @error('autor_id') <div class="invalid-feedback">{{ $message }}</div> @enderror
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label">Gênero</label>
+            <select name="genero_id" class="form-select @error('genero_id') is-invalid @enderror">
+                @foreach ($generos as $genero)
+                    <option value="{{ $genero->id }}" {{ old('genero_id', $livro->genero_id) == $genero->id ? 'selected' : '' }}>
+                        {{ $genero->nome }}
+                    </option>
+                @endforeach
+            </select>
+            @error('genero_id') <div class="invalid-feedback">{{ $message }}</div> @enderror
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label">Editora</label>
+            <select name="editora_id" class="form-select @error('editora_id') is-invalid @enderror">
+                @foreach ($editoras as $editora)
+                    <option value="{{ $editora->id }}" {{ old('editora_id', $livro->editora_id) == $editora->id ? 'selected' : '' }}>
+                        {{ $editora->nome }}
+                    </option>
+                @endforeach
+            </select>
+            @error('editora_id') <div class="invalid-feedback">{{ $message }}</div> @enderror
         </div>
 
         <button class="btn btn-primary" type="submit">Atualizar</button>
