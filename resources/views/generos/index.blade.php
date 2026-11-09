@@ -31,4 +31,6 @@
             @endforelse
         </tbody>
     </table>
+
+    {{ $generos->links('vendor.pagination.biblioteca') }}
 @endsection
