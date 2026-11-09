@@ -40,4 +40,35 @@ class AuthController extends Controller
         session()->forget(['usuario_id', 'usuario_nome']);
         return redirect()->route('login');
     }
+
+        public function showRegister()
+    {
+        return view('auth.register');
+    }
+
+    public function register(Request $request)
+    {
+        $request->validate([
+            'name' => 'required|string|max:255',
+            'email' => 'required|email|max:255|unique:users,email',
+            'password' => 'required|min:6|confirmed',
+        ], [
+            'name.required' => 'Informe o nome.',
+            'email.required' => 'Informe o e-mail.',
+            'email.email' => 'Informe um e-mail válido.',
+            'email.unique' => 'Este e-mail já está cadastrado.',
+            'password.required' => 'Informe a senha.',
+            'password.min' => 'A senha deve ter no mínimo 6 caracteres.',
+            'password.confirmed' => 'A confirmação da senha não confere.',
+        ]);
+
+        // O model User já faz o hash da senha (cast 'hashed')
+        $usuario = User::create([
+            'name' => $request->name,
+            'email' => $request->email,
+            'password' => $request->password,
+        ]);
+
+        return redirect()->route('livros.index')->with('sucesso', 'Usuário cadastrado com sucesso!');
+    }
 }

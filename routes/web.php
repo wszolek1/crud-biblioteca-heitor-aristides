@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\Route;
 Route::middleware('checkIsNotLogged')->group(function () {
     Route::get('/', [AuthController::class, 'showLogin'])->name('login');
     Route::post('/login', [AuthController::class, 'login'])->name('login.store');
+    
 });
 
 Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
@@ -28,6 +29,7 @@ Route::middleware('checkIsLogged')->group(function () {
     Route::get('/livros/{id}/editar', [LivroController::class, 'edit'])->name('livros.edit');
     Route::put('/livros/{id}', [LivroController::class, 'update'])->name('livros.update');
     Route::delete('/livros/{id}', [LivroController::class, 'destroy'])->name('livros.destroy');
+    Route::get('/livros/pdf', [LivroController::class, 'pdf'])->name('livros.pdf');
 
     Route::get('/generos', [GeneroController::class, 'index'])->name('generos.index');
     Route::get('/generos/novo', [GeneroController::class, 'create'])->name('generos.create');
@@ -42,4 +44,8 @@ Route::middleware('checkIsLogged')->group(function () {
     Route::get('/editoras/{id}/editar', [EditoraController::class, 'edit'])->name('editoras.edit');
     Route::put('/editoras/{id}', [EditoraController::class, 'update'])->name('editoras.update');
     Route::delete('/editoras/{id}', [EditoraController::class, 'destroy'])->name('editoras.destroy');
+
+    Route::get('/cadastro', [AuthController::class, 'showRegister'])->name('register');
+    Route::post('/cadastro', [AuthController::class, 'register'])->name('register.store');
+
 });
