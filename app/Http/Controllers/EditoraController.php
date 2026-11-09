@@ -11,7 +11,7 @@ class EditoraController extends Controller
 {
     public function index()
     {
-        $editoras = Editora::orderBy('nome')->get();
+        $editoras = Editora::orderBy('nome')->paginate(5);
         return view('editoras.index', compact('editoras'));
     }
 

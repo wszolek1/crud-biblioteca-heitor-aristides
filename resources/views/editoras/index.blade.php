@@ -35,4 +35,6 @@
             @endforelse
         </tbody>
     </table>
+
+    {{ $editoras->links('vendor.pagination.biblioteca') }}
 @endsection

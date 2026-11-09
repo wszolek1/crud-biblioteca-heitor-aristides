@@ -33,4 +33,6 @@
             @endforelse
         </tbody>
     </table>
+
+    {{ $autores->links('vendor.pagination.biblioteca') }}
 @endsection
