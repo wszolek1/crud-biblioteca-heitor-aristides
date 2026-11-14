@@ -69,6 +69,5 @@ class AuthController extends Controller
             'password' => $request->password,
         ]);
 
-        return redirect()->route('livros.index')->with('sucesso', 'Usuário cadastrado com sucesso!');
-    }
+        return redirect()->route('usuarios.index')->with('sucesso', 'Usuário cadastrado com sucesso!');    }
 }
