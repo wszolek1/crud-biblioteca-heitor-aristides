@@ -35,6 +35,5 @@
         </div>
 
         <button type="submit" class="btn btn-dark">Cadastrar</button>
-        <a href="{{ route('livros.index') }}" class="btn btn-secondary">Cancelar</a>
-    </form>
+<a href="{{ route('usuarios.index') }}" class="btn btn-secondary">Cancelar</a>    </form>
 @endsection

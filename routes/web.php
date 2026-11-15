@@ -6,6 +6,7 @@ use App\Http\Controllers\EditoraController;
 use App\Http\Controllers\GeneroController;
 use App\Http\Controllers\LivroController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\UsuarioController;
 
 Route::middleware('checkIsNotLogged')->group(function () {
     Route::get('/', [AuthController::class, 'showLogin'])->name('login');
@@ -13,9 +14,11 @@ Route::middleware('checkIsNotLogged')->group(function () {
     
 });
 
-Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 
 Route::middleware('checkIsLogged')->group(function () {
+
+    Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
+
     Route::get('/autores', [AutorController::class, 'index'])->name('autores.index');
     Route::get('/autores/novo', [AutorController::class, 'create'])->name('autores.create');
     Route::post('/autores', [AutorController::class, 'store'])->name('autores.store');
@@ -47,5 +50,12 @@ Route::middleware('checkIsLogged')->group(function () {
 
     Route::get('/cadastro', [AuthController::class, 'showRegister'])->name('register');
     Route::post('/cadastro', [AuthController::class, 'register'])->name('register.store');
+    
+    Route::get('/usuarios', [UsuarioController::class, 'index'])->name('usuarios.index');
+    Route::get('/usuarios/{id}/editar', [UsuarioController::class, 'edit'])->name('usuarios.edit');
+    Route::put('/usuarios/{id}', [UsuarioController::class, 'update'])->name('usuarios.update');
+    Route::delete('/usuarios/{id}', [UsuarioController::class, 'destroy'])->name('usuarios.destroy');
+
+    
 
 });
